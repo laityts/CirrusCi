@@ -1,0 +1,8 @@
+ui_print("Android 11 for CC9e");
+
+ui_print("安装中...");
+show_progress(0.800000, 0);
+package_extract_file("boot.img", "/dev/block/bootdevice/by-name/boot"); 
+package_extract_file("dtbo.img", "/dev/block/bootdevice/by-name/dtbo"); 
+
+show_progress(0.100000, 10);

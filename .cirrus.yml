@@ -1,0 +1,31 @@
+env:
+    TG_TOKEN: "ENCRYPTED[6f0f2c1cec89c462255a8d6ccd7cdf0114ce3a5085782578f564c68a206ede00601053b17e7161bb2d96353445c4d948]"
+    TG_CHAT_ID: "ENCRYPTED[02dcdd89c6ac1f3809e713b5f1b16e287cb2c35770561e220075599ef5db12a40acefbf3dc739b565d0dfc84349573f2]"
+    ROM: "LineageOS"
+    MANIFEST: "https://github.com/LineageOS/android.git"
+    BRANCH: "lineage-18.1"
+    TARGET: "laurus"
+    LUNCH: "lineage"
+    BRAND: "xiaomi"
+
+task:
+  name: "build"
+  timeout_in: 2h
+  container:
+      image: ubuntu:18.04
+      cpu: 8
+      memory: 32G
+
+  Env_script:
+       - apt-get -y update && apt-get -y upgrade && DEBIAN_FRONTEND=noninteractive TZ=Asia/Beijing apt-get -y install tzdata && apt-get -y install bc bison build-essential ccache curl flex git gnupg gperf liblz4-tool libncurses5 libncurses-dev libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev python imagemagick libbz2-dev libssl-dev lzma ncftp bash-completion jq
+       - git config --global user.email "laityts@gmail.com"
+       - git config --global user.name "laityts"
+
+  sync_script:
+      - bash sync.sh
+
+  dt_script:
+      - bash dt.sh
+
+  Build_script:
+      - bash build.sh
