@@ -1,8 +1,8 @@
 [
   {
-    "url":"https://github.com/laityts/android_kernel_xiaomi_laurus.git",
+    "url":"https://github.com/MiCode/Xiaomi_Kernel_OpenSource",
     "target_path":"kernel/xiaomi/sm6125",
-    "branch":"master"
+    "branch":"laurus-q-oss"
   },
   {
     "url":"https://github.com/laityts/android_device_xiaomi_sm6125-common.git",

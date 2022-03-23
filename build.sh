@@ -46,15 +46,22 @@ ls out/target/product/$TARGET/obj/KERNEL_OBJ/arch/arm64/boot/dts/qcom || true
 source build/envsetup.sh
 lunch ${LUNCH}_${TARGET}-userdebug
 make bootimage -j$(nproc --all) 2>&1 | tee log.txt
-#make dtboimage -j$(nproc --all) 2>&1 | tee log2.txt || true
+make dtboimage -j$(nproc --all) 2>&1 | tee log2.txt || true
 ls out/target/product/$TARGET
-#if [ -f "$DTBO" ]; then
-    zip los-{$DATE}.zip $BOOT $DTBO /tmp/cirrus-ci-build/META-INF
-#else
-#    zip los-{$DATE}.zip $BOOT /tmp/cirrus-ci-build/META-INF
-#fi 
+mv $BOOT /tmp/cirrus-ci-build/$ROM/boot.img
+mv $DTBO /tmp/cirrus-ci-build/$ROM/dtbo.img
+mv -r /tmp/cirrus-ci-build/META-INF /tmp/cirrus-ci-build/$ROM/META-INF
+
+# Compress
+if [ -f "dtbo.img" ]; then
+    zip -r los-${DATE}.zip boot.img dtbo.img META-INF/
+else
+    zip -r los-${DATE}.zip boot.img META-INF/
+fi 
 ls
-if [ -f "los-{$DATE}.zip" ]; then
+
+# Push files
+if [ -f "los-${DATE}.zip" ]; then
     tg_post_build los-${DATE}.zip "Build Complete"
 else
     tg_post_build log.txt "Build Fail"
