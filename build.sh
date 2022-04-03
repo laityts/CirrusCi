@@ -37,7 +37,7 @@ tg_post_build() {
 
 # Set env
 BOOT="out/target/product/$TARGET/boot.img"
-DTBO="out/target/product/$TARGET/dtbo.img"
+#DTBO="out/target/product/$TARGET/dtbo.img"
 
 # Compile
 cd $ROM
@@ -46,24 +46,26 @@ ls out/target/product/$TARGET/obj/KERNEL_OBJ/arch/arm64/boot/dts/qcom || true
 source build/envsetup.sh
 lunch ${LUNCH}_${TARGET}-userdebug
 make bootimage -j$(nproc --all) 2>&1 | tee log.txt
-make dtboimage -j$(nproc --all) 2>&1 | tee log2.txt || true
+#make dtboimage -j$(nproc --all) 2>&1 | tee log2.txt || true
 ls out/target/product/$TARGET
 mv $BOOT /tmp/cirrus-ci-build/$ROM/boot.img
-mv $DTBO /tmp/cirrus-ci-build/$ROM/dtbo.img
-mv -r /tmp/cirrus-ci-build/META-INF /tmp/cirrus-ci-build/$ROM/META-INF
+#mv $DTBO /tmp/cirrus-ci-build/$ROM/dtbo.img
+mv -f /tmp/cirrus-ci-build/META-INF /tmp/cirrus-ci-build/$ROM/META-INF
+
+zipname="$ROM-${DATE}.zip"
 
 # Compress
 if [ -f "dtbo.img" ]; then
-    zip -r los-${DATE}.zip boot.img dtbo.img META-INF/
+    zip -r $zipname boot.img dtbo.img META-INF/
 else
-    zip -r los-${DATE}.zip boot.img META-INF/
+    zip -r $zipname boot.img META-INF/
 fi 
 ls
 
 # Push files
-if [ -f "los-${DATE}.zip" ]; then
-    tg_post_build los-${DATE}.zip "Build Complete"
+if [ -f "$zipname" ]; then
+    tg_post_build $zipname "Build Complete"
 else
     tg_post_build log.txt "Build Fail"
-    tg_post_build log2.txt "Build Fail"
+#    tg_post_build log2.txt "Build Fail"
 fi

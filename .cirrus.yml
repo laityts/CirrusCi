@@ -1,11 +1,11 @@
 env:
     TG_TOKEN: "ENCRYPTED[6f0f2c1cec89c462255a8d6ccd7cdf0114ce3a5085782578f564c68a206ede00601053b17e7161bb2d96353445c4d948]"
     TG_CHAT_ID: "ENCRYPTED[02dcdd89c6ac1f3809e713b5f1b16e287cb2c35770561e220075599ef5db12a40acefbf3dc739b565d0dfc84349573f2]"
-    ROM: "LineageOS"
-    MANIFEST: "https://github.com/LineageOS/android.git"
-    BRANCH: "lineage-18.1"
-    TARGET: "laurus"
-    LUNCH: "lineage"
+    ROM: "PixelExperience"
+    MANIFEST: "https://github.com/PixelExperience/manifest"
+    BRANCH: "twelve"
+    TARGET: "tiffany"
+    LUNCH: "aosp"
     BRAND: "xiaomi"
 
 task:

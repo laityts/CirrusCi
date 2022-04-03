@@ -32,3 +32,8 @@ do
    fi
    ls ${target}
 done
+cd kernel/xiaomi/msm8953
+dtsi="arch/arm64/boot/dts/qcom/tiffany/msm8953-tiffany.dtsi"
+sed -i '/cust/ { N; s/$/\					status = "disable";/; }' $dtsi
+sed -i '/cust/d' $dtsi
+grep -A 13 'fstab' $dtsi
